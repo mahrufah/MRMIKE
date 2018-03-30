@@ -68,4 +68,57 @@ function fndecide(targetElement, prevTurn) {
     }
     return false;
 }
+function fnNewGame() {
+    var gameUL = document.getElementById("game");
+    if (gameUL.innerHTML !== '') {
+        gameUL.innerHTML = null;
+        score = {
+            'X': 0,
+            'O': 0
+        };
+        turn = 'X';
+        gridValue = 0;
+    }
+    var select = document.getElementById("grid");
+    gridValue = select.options[select.selectedIndex].value;
+    var i, j, li, k = 0,
+        classLists;
+    var gridAdd = +gridValue + 1;
+
+    for (i = 1; i <= gridValue; i += 1) {
+        tr = document.createElement('tr');
+        for (j = 1; j <= gridValue; j += 1) {
+            k += 1;
+            li = document.createElement('td');
+            li.setAttribute("id", 'li' + k);
+
+            classLists = 'td row' + i + ' col' + j;
+
+            if (i === j) {
+                classLists = 'td row' + i + ' col' + j + ' dia0';
+            }
+
+            if ((i + j) === gridAdd) {
+                classLists = 'td row' + i + ' col' + j + ' dia1';
+            }
+
+            if (!isEven(gridValue) && (Math.round(gridValue / 2) === i && Math.round(gridValue / 2) === j))
+                classLists = 'td row' + i + ' col' + j + ' dia0 dia1';
+
+            li.className = classLists;
+            tr.appendChild(li);
+
+        }
+        gameUL.appendChild(tr);
+    }
+}
+
+function isEven(value) {
+    if (value % 2 == 0)
+        return true;
+    else
+        return false;
+}
+
+
 
